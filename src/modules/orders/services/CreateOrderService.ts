@@ -31,10 +31,10 @@ class CreateOrderService {
   ) {}
 
   public async execute({ customer_id, products }: IRequest): Promise<Order> {
-    const costumer = await this.customersRepository.findById(customer_id);
+    const customer = await this.customersRepository.findById(customer_id);
 
-    if (!costumer) {
-      throw new AppError('Costumer not found');
+    if (!customer) {
+      throw new AppError('customer not found');
     }
 
     const productsIds = products.filter(product => product.id);
@@ -44,6 +44,23 @@ class CreateOrderService {
     if (allProducts.length !== products.length) {
       throw new AppError('Your order have a product missing in database');
     }
+
+    const order_products = allProducts.map(product => {
+      const obj = {
+        product_id: product.id,
+        price: product.price,
+        quantity: product.quantity,
+      };
+
+      return obj;
+    });
+
+    const order = await this.ordersRepository.create({
+      customer,
+      products: order_products.map(product => product),
+    });
+
+    return order;
   }
 }
 

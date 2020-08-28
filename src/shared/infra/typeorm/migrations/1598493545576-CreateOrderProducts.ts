@@ -32,6 +32,8 @@ export default class CreateOrderProducts1598493545576
           {
             name: 'price',
             type: 'decimal',
+            precision: 11,
+            scale: 2,
             isNullable: true,
           },
           {
@@ -58,8 +60,8 @@ export default class CreateOrderProducts1598493545576
       new TableForeignKey({
         name: 'OrdersProductsOrder',
         columnNames: ['order_id'],
-        referencedTableName: 'orders',
         referencedColumnNames: ['id'],
+        referencedTableName: 'orders',
         onDelete: 'SET NULL',
         onUpdate: 'CASCADE',
       }),
@@ -69,8 +71,8 @@ export default class CreateOrderProducts1598493545576
       new TableForeignKey({
         name: 'OrdersProductsProduct',
         columnNames: ['product_id'],
-        referencedTableName: 'products',
         referencedColumnNames: ['id'],
+        referencedTableName: 'products',
         onDelete: 'SET NULL',
         onUpdate: 'CASCADE',
       }),
