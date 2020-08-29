@@ -26,9 +26,9 @@ class CreateCustomerService {
       throw new AppError('This e-mail is already used!');
     }
 
-    const costumer = await this.customersRepository.create({ email, name });
+    const customer = await this.customersRepository.create({ email, name });
 
-    return costumer;
+    return customer;
   }
 }
 

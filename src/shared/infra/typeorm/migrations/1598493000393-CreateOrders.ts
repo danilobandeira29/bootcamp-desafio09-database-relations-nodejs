@@ -19,11 +19,6 @@ export default class CreateOrders1598493000393 implements MigrationInterface {
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'costumer_id',
-            type: 'uuid',
-            isNullable: true,
-          },
-          {
             name: 'created_at',
             type: 'timestamp',
             default: 'now()',
@@ -36,23 +31,9 @@ export default class CreateOrders1598493000393 implements MigrationInterface {
         ],
       }),
     );
-
-    await queryRunner.createForeignKey(
-      'orders',
-      new TableForeignKey({
-        name: 'CostumerOrder',
-        columnNames: ['costumer_id'],
-        referencedColumnNames: ['id'],
-        referencedTableName: 'customers',
-        onDelete: 'SET NULL',
-        onUpdate: 'CASCADE',
-      }),
-    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey('orders', 'CostumerOrder');
-
     await queryRunner.dropTable('orders');
   }
 }

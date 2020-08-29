@@ -10,7 +10,7 @@ export default class CreateOrderProducts1598493545576
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'orders_product',
+        name: 'orders_products',
         columns: [
           {
             name: 'id',
@@ -20,26 +20,14 @@ export default class CreateOrderProducts1598493545576
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'product_id',
-            type: 'uuid',
-            isNullable: true,
-          },
-          {
-            name: 'order_id',
-            type: 'uuid',
-            isNullable: true,
-          },
-          {
             name: 'price',
             type: 'decimal',
             precision: 11,
             scale: 2,
-            isNullable: true,
           },
           {
             name: 'quantity',
             type: 'int',
-            isNullable: true,
           },
           {
             name: 'created_at',
@@ -54,35 +42,9 @@ export default class CreateOrderProducts1598493545576
         ],
       }),
     );
-
-    await queryRunner.createForeignKey(
-      'orders_product',
-      new TableForeignKey({
-        name: 'OrdersProductsOrder',
-        columnNames: ['order_id'],
-        referencedColumnNames: ['id'],
-        referencedTableName: 'orders',
-        onDelete: 'SET NULL',
-        onUpdate: 'CASCADE',
-      }),
-    );
-    await queryRunner.createForeignKey(
-      'orders_product',
-      new TableForeignKey({
-        name: 'OrdersProductsProduct',
-        columnNames: ['product_id'],
-        referencedColumnNames: ['id'],
-        referencedTableName: 'products',
-        onDelete: 'SET NULL',
-        onUpdate: 'CASCADE',
-      }),
-    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey('orders_product', 'OrdersProductsProduct');
-    await queryRunner.dropForeignKey('orders_product', 'OrdersProductsOrder');
-
     await queryRunner.dropTable('orders_product');
   }
 }
