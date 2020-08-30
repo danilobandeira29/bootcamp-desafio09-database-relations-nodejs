@@ -37,7 +37,9 @@ class CreateOrderService {
       throw new AppError('Customer not found.');
     }
 
-    const productsIds = products.filter(product => product.id);
+    const productsIds = products.map(product => {
+      return { id: product.id };
+    });
 
     const findAllProductsById = await this.productsRepository.findAllById(
       productsIds,
@@ -49,29 +51,41 @@ class CreateOrderService {
 
     // findAllProductsById = [{ id: 10, price: 100, quantity: 3 ... }, {...}]
 
-    const quantityProductsInOrder = products.filter(
-      product => product.quantity,
+    findAllProductsById.map(product =>
+      products.map(item => {
+        if (item.quantity > product.quantity) {
+          throw new AppError('Insufficient in stock');
+        }
+
+        return undefined;
+      }),
     );
 
-    const quantityProductsNotAvailableInStock = findAllProductsById.map(
-      product =>
-        quantityProductsInOrder.map(item => item.quantity > product.quantity),
-    );
+    const subtractQuantityProductsInStock = findAllProductsById.map(product => {
+      const { quantity } = products.filter(item => item.id === product.id)[0];
 
-    if (quantityProductsNotAvailableInStock) {
-      throw new AppError('Quantity insufficent in stock');
-    }
+      return {
+        id: product.id,
+        quantity: product.quantity - quantity,
+      };
+    });
+
+    const productsOrder = findAllProductsById.map(product => {
+      return {
+        product_id: product.id,
+        price: product.price,
+        quantity: product.quantity,
+      };
+    });
 
     const order = await this.ordersRepository.create({
       customer: findCustomer,
-      products: findAllProductsById.map(product => {
-        return {
-          product_id: product.id,
-          price: product.price,
-          quantity: product.quantity,
-        };
-      }),
+      products: productsOrder,
     });
+
+    await this.productsRepository.updateQuantity(
+      subtractQuantityProductsInStock,
+    );
 
     return order;
   }
