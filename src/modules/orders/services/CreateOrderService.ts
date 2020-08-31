@@ -71,10 +71,12 @@ class CreateOrderService {
     });
 
     const productsOrder = findAllProductsById.map(product => {
+      const { quantity } = products.filter(item => item.id === product.id)[0];
+
       return {
         product_id: product.id,
         price: product.price,
-        quantity: product.quantity,
+        quantity,
       };
     });
 
