@@ -9,6 +9,7 @@
 - [Code formatters](#-Code-formatters)
 - [Required Programs](#-Required-Programs)
 - [Clone the repository](#-Clone-the-repository)
+- [Tests](#-Tests)
 
 
 ## 📝 About
@@ -41,8 +42,11 @@ This application will allow the creation of customers, products and orders, wher
 
 ## 🛑 Required Programs
 - Docker
+- Create a database called *gostack_desafio09* and *gostack_desafio09_tests*, both with the username *postgres* and password *docker*.
 
-Your * ormconfig.ts * file must match the port on which PostgreSQL was installed on your computer, which by default is *5432*.
+> Or just edit *ormconfig.ts* (found at the root of the project) according to your need.
+
+Your *ormconfig.ts* file must match the port on which PostgreSQL was installed on your computer, which by default is *5432*.
 
 ```typescript
 {
@@ -79,6 +83,14 @@ Your * ormconfig.ts * file must match the port on which PostgreSQL was installed
   ## opens another terminal and inicialize the project (or you can use 'npm start')
   $ yarn dev:server
 ```
+---
+
+## 🧪 Tests
+With your database running, open your terminal and execute
+```bash
+$ yarn tests
+
+```
 
 ---
 
@@ -89,6 +101,7 @@ Your * ormconfig.ts * file must match the port on which PostgreSQL was installed
 - [Formatadores de Código](#-Formatadores-de-Código)
 - [Programas necessários](#-Programas-necessários)
 - [Clonar o Projeto](#-Clonar-o-Projeto)
+- [Testes](#-Testes)
 
 
 ## 📝 Sobre
@@ -121,6 +134,8 @@ Essa será aplicação permite a criação de clientes, produtos e pedidos, onde
 
 ## 🛑 Programas necessários
 - Docker
+- Fazer a criação de um banco de dados chamado *gostack_desafio09* e *gostack_desafio09_tests*, ambos com o usuário *postgres* e senha *docker*.
+> Ou basta editar o *ormconfig.ts*(encontrado na raíz do projeto) de acordo com a sua necessidade.
 
 Seu arquivo *ormconfig.ts* deve está de acordo com a porta em que o PostgreSQL foi instalada no seu computador, que por padrão é *5432*.
 
@@ -160,6 +175,13 @@ ___
   $ yarn dev:server
 ```
 ---
+
+## 🧪 Testes
+Com o banco de dados executando, abra o seu terminal e execute
+```bash
+$ yarn tests
+
+```
 ---
 
 **Developed by/Desenvolvido por**👻
